@@ -63,11 +63,6 @@ impl ReactionType {
         }
     }
     /// Diffusion flux ratios (J_j / J_i) for each reaction type. 
-    /// If sum(stoichiometric coefficients) = 0, J_j / J_i = nu_j / nu_i. 
-    /// Otherwise, J_j / J_i = (N_j - x_j * N_total) / (N_i - x_i * N_total)
-    /// where N represents molar flux. N_total is the total molar flux. 
-    /// We can compute N_total by using N for one of the components as reference. 
-    /// For example, for reaction TypeV, we can use N_A as reference, and N_B = N_A, N_C = - N_A, so N_total = N_A + N_A - N_A = N_A.
     pub fn flux_ratios(&self, x: &Array<f64, Ix1>) -> Array<f64, Ix2> {
         let n = x.len(); 
         let mut flux = Array::<f64, Ix2>::zeros((n, n));
@@ -256,5 +251,25 @@ impl UnifacParams {
     }
     pub fn get_q(&self) -> Array<f64, Ix1> {
         self.Q.dot(&self.nu.t())
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*; 
+    #[test]
+    fn test_j_ratios_rx_vii() {
+        let reaction = ReactionType::TypeVII; 
+        let x = array![0.6698, 0.3302, 0.0, 0.0];
+        let j_ratios = reaction.flux_ratios(&x); 
+        let ans = array![
+            [1.000, 0.5036, -0.7518, -0.7518],
+            [1.9858, 1.000, -1.4929, -1.4929],
+            [-1.3302, -0.6698, 1.000, 1.000],
+            [-1.3302, -0.6698, 1.000, 1.000]
+        ];
+        let diff = (j_ratios - ans).abs().sum(); 
+        assert!(diff < 1e-3, "diff = {diff}");
+
     }
 }
