@@ -51,9 +51,9 @@ if __name__ == "__main__":
     catalyst_porosity = 0.4886 
     catalyst_tortuosity = 1.3 
     catalyst_density = 600.0 # g/dm3 
-    kinetic_constant = 4.5747e-5 # dm6 mol-1 min-1 gcat-1
+    kinetic_constant = 4.35e-5 # dm6 mol-1 min-1 gcat-1
     equilibrium_constant = 2.6700 
-    equilibrium_Ca = 3.2450 # mol/dm3 
+    equilibrium_Ca = 3.24 # mol/dm3 
     concentrations = [8.3747, 8.3747, 0.0, 0.0] # mol/dm3
     diffusivities = [0.3172e-4, 0.2203e-4, 0.2009e-4, 0.3684e-4] # dm2/min
     result = effectiveness_factor_wrapper(reaction_type, catalyst_geometry, catalyst_characteristic_length, catalyst_porosity, catalyst_density, kinetic_constant, equilibrium_constant, equilibrium_Ca, concentrations, DiffusivityComputation.Precomputed, catalyst_tortuosity=catalyst_tortuosity, diffusivities=diffusivities)
@@ -65,7 +65,7 @@ if __name__ == "__main__":
     catalyst_porosity = 0.4886 
     catalyst_tortuosity = 1.3 
     catalyst_density = 0.6 # g/cm3
-    kinetic_constant = 4.5747e-5 * 1e6/60 # cm6 mol-1 s-1 gcat-1
+    kinetic_constant = 4.35e-5 * 1e6/60 # cm6 mol-1 s-1 gcat-1
     equilibrium_constant = 2.6700 
     # viscosities in cP
     viscosities = [0.5728194655847797,
@@ -76,7 +76,7 @@ if __name__ == "__main__":
     molecular_weights = [60.0520, 46.0684, 88.1051, 18.0153]
     molar_volumes_bp = [66.0, 60.85, 106.3, 18.8]
     temperature = 273.15 + 78.0 # K
-    equilibrium_Ca = 3.2450e-3 # mol/cm3 
+    equilibrium_Ca = 3.24e-3 # mol/cm3 
     concentrations = [3.2482e-3,    3.2482e-3,    5.2844e-3,    5.2844e-3]
     result = effectiveness_factor_wrapper(reaction_type, catalyst_geometry, catalyst_characteristic_length, catalyst_porosity, catalyst_density, kinetic_constant, equilibrium_constant, equilibrium_Ca, concentrations, DiffusivityComputation.Ideal, catalyst_tortuosity=catalyst_tortuosity, molecular_weights=molecular_weights, association_factors=association_factors, molar_volumes_bp=molar_volumes_bp, viscosities=viscosities, temperature=temperature)
     print(f"eta = {result:.3f} (ideal)")
