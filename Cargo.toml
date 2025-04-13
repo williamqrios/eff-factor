@@ -4,8 +4,11 @@ version = "0.1.0"
 edition = "2024"
 
 [lib]
-name = "string_sum"
+name = "effectiveness_factor"
 crate-type = ["cdylib", "rlib"] 
+
+[dependencies]
+ndarray = "0.16.1"
 
 [dependencies.pyo3]
 version = "0.24.0" 

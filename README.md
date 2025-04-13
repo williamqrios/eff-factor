@@ -1,4 +1,3 @@
-
 Running Python from Rust:
 1. Using conda or pip, set up an environment in the project's root directory and install `maturin`
 ```
@@ -16,4 +15,8 @@ import eff_factor
 4. To test some functionality from within Rust (on Linux)
 ```
 LD_LIBRARY_PATH=./envs/lib cargo test --no-default-features 
+```
+5. To test some functionality and display the output even if the test passes 
+```
+LD_LIBRARY_PATH=./envs/lib cargo test --no-default-features -- --nocapture
 ```
