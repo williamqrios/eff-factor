@@ -10,7 +10,7 @@ maturin develop
 ```
 3. Use `testing.py` to test out functionality from Python, by first importing the package
 ```
-import eff_factor
+import effectiveness_factor as ef
 ```
 4. To test some functionality from within Rust (on Linux)
 ```
