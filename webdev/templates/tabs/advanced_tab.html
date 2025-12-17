@@ -1,0 +1,119 @@
+<div id="advanced" class="tab-content">
+    <div class="form-section">
+        <h2>UNIFAC Input Parameters</h2>
+        <p>It is <b>highly</b> recommended that you keep track of required inputs in a spreadsheet or similar application and copy and paste the values here.</p>
+
+        <div class="collapsible-section">
+            <div class="collapsible-header" data-group="0">
+                <span>Group contribution matrix instructions</span>
+                <div class="collapsible-toggle">▼</div>
+            </div>
+            <div class="collapsible-content">
+                <div class="collapsible-body">
+                    <p>Each row represents <b>one</b> UNIFAC structural group (CH3, ACH, H2O, etc.).</p>
+                    <p>Each column represents <b>one</b> specific component in the reacting mixture, labeled according to your previously selected reaction type.</p>
+                    <p>The value in each cell represents the <b>number of times</b> a given UNIFAC group appears in the specified molecule.</p>
+                    <p>Only unsigned integer values are valid (0, 1, 2, ...).</p>
+                </div>
+            </div>
+        </div>
+
+        <table class="data-table">
+            <thead id="groupMatrixHead">
+                <tr>
+                    <th>Group Label</th>
+                    <th>Component A</th>
+                    <th>Component B</th>
+                    <th>Component C</th>
+                    <th>Component D</th>
+                    <th class="row-action"></th>
+                </tr>
+            </thead>
+            <tbody id="groupMatrix">
+                <tr>
+                    <td><input type="text" placeholder="Group 1" class="group-name"></td>
+                    <td><input type="number" placeholder="0" step="1" min="0" class="group1-A"></td>
+                    <td><input type="number" placeholder="0" step="1" min="0" class="group1-B"></td>
+                    <td><input type="number" placeholder="0" step="1" min="0" class="group1-C"></td>
+                    <td><input type="number" placeholder="0" step="1" min="0" class="group1-D"></td>
+                    <td class="row-action"><button type="button" class="btn-danger btn-small delete-row" style="display: none;">✕</button></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="button-group">
+            <button type="button" class="btn-secondary btn-small" id="addRowBtn">
+                + Add Component
+            </button>
+        </div>
+
+
+
+        <div class="collapsible-section">
+            <div class="collapsible-header" data-group="1">
+                <span>Group parameters instructions</span>
+                <div class="collapsible-toggle">▼</div>
+            </div>
+            <div class="collapsible-content">
+                <div class="collapsible-body">
+                    <p>Each row represents <b>one</b> UNIFAC structural group (CH3, ACH, H2O, etc.).</p>
+                    <p>There are two columns corresponding to parameters Rk and Qk</p>
+                    <p>The number of rows in this table is linked to the number of rows in the prior table.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- This table will grow in size according to the number of rows in the prior table. -->
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Group Label</th>
+                    <th>Rk</th>
+                    <th>Qk</th>
+                </tr>
+            </thead>
+            <tbody id="groupParameters">
+                <tr>
+                    <td><input type="text" placeholder="Group 1" class="group-name"></td>
+                    <td><input type="number" placeholder="0.0" step="0.1" class="group1-Rk"></td>
+                    <td><input type="number" placeholder="0.0" step="0.1" class="group1-Qk"></td>
+                </tr>
+            </tbody>
+        </table>
+
+
+        
+        <div class="collapsible-section">
+            <div class="collapsible-header" data-group="1">
+                <span>Energy of interaction matrix instructions</span>
+                <div class="collapsible-toggle">▼</div>
+            </div>
+            <div class="collapsible-content">
+                <div class="collapsible-body">
+                    <p>This is a square matrix with <b>M</b> rows and columns, where M is the total number of UNIFAC structural groups.</p>
+                    <p>Each cell contains the interaction parameter value between group <i>i</i> and group <i>j</i>, denoted as <i>a(i, j)</i>.</p>
+                    <p>Note that this matrix is typically not symmetric and <i>a(i, j)</i> will usually be different from <i>a(j, i)</i>.</p>
+                </div>
+            </div>
+        </div>
+        
+
+        <!-- This table will grow in size (rows AND columns) according to the number of rows in the main table. -->
+        <table class="data-table">
+            <thead>
+                <tr id="energyMatrixHead">
+                    <th>Group Label</th>
+                    <th data-group-id="0">Group 1</th>
+                </tr>
+            </thead>
+            <tbody id="energyMatrix">
+                <tr data-group-id="0">
+                    <td><input type="text" placeholder="Group 1" class="group-name"></td>
+                    <td data-group-id="0"><input type="number" placeholder="0.0" step="0.1" class="energy1-1"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        
+    </div>
+</div>

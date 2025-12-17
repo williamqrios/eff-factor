@@ -1,0 +1,131 @@
+<div id="geometry" class="tab-content active">
+    <div class="form-section">
+        <h2>Geometry</h2>
+        <p>Select the catalyst geometry and fill out required properties.</p>
+        <div class="radio-group">
+            <div class="radio-option">
+                <input type="radio" id="mode-slab" name="geometryType" value="slab" checked>
+                <label for="mode-slab">Slab</label>
+            </div>
+            <div class="radio-option">
+                <input type="radio" id="mode-cylinder" name="geometryType" value="cylinder">
+                <label for="mode-cylinder">Cylinder</label>
+            </div>
+            <div class="radio-option">
+                <input type="radio" id="mode-sphere" name="geometryType" value="sphere">
+                <label for="mode-sphere">Sphere</label>
+            </div>
+            <div class="radio-option">
+                <input type="radio" id="mode-custom" name="geometryType" value="custom">
+                <label for="mode-custom">Custom</label>
+            </div>
+        </div>
+
+        <div class="input-grid" style="margin-top: var(--spacing-lg);">
+            <div class="form-group">
+                <label for="porosity" class="required">Porosity</label>
+                <input type="number" id="porosity" name="porosity" placeholder="Enter value" step="0.01" required>
+                <span class="helper-text">Between 0 and 1</span>
+            </div>
+            <div class="form-group">
+                <label for="tortuosity">Tortuosity (optional)</label>
+                <input type="number" id="tortuosity" name="tortuosity" placeholder="Enter value" step="0.01">
+                <span class="helper-text">Estimated with porosity if unavailable</span>
+            </div>
+            <div class="form-group">
+                <label for="charlength" class="required">Characteristic Length</label>
+                <input type="number" id="charlength" name="charlength" placeholder="Enter value" step="0.01" required>
+                <span class="helper-text">dm</span>
+            </div>
+            <div class="form-group">
+                <label for="particledensity" class="required">Particle Density</label>
+                <input type="number" id="particledensity" name="particledensity" placeholder="Enter value" step="0.01" required>
+                <span class="helper-text">g/dm³</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-section">
+        <h2>Reaction Type</h2>
+        <p>Select reaction kinetics, specify the concentration of system components, and reaction properties.</p>
+        <p><i>Note</i>: A = your <b>limiting</b> reactant.</p>
+        <div class="radio-group" style="grid-template-columns: repeat(4, auto)">
+            <div class="radio-option">
+                <input type="radio" id="type1" name="rxType" value="type1" checked>
+                <label for="type1">A + B ⇌ C + D</label>
+            </div>
+            <div class="radio-option">
+                <input type="radio" id="type2" name="rxType" value="type2">
+                <label for="type2">2 A ⇌ C + D</label>
+            </div>
+            <div class="radio-option">
+                <input type="radio" id="type3" name="rxType" value="type3">
+                <label for="type3">A + B ⇌ 2 C</label>
+            </div>
+            <div class="radio-option">
+                <input type="radio" id="type4" name="rxType" value="type4">
+                <label for="type4">A ⇌ C + D</label>
+            </div>
+            <div class="radio-option">
+                <input type="radio" id="type5" name="rxType" value="type5">
+                <label for="type5">A + B ⇌ C</label>
+            </div>
+            <div class="radio-option">
+                <input type="radio" id="type6" name="rxType" value="type6">
+                <label for="type6">A ⇌ C</label>
+            </div>
+            <div class="radio-option">
+                <input type="radio" id="type7" name="rxType" value="type7">
+                <label for="type7">2 A + B ⇌ C + D</label>
+            </div>
+
+        </div>
+
+        <div class="input-grid" style="margin-top: var(--spacing-lg);">
+            <div class="form-group">
+                <label for="concA" class="required">Concentration of A</label>
+                <input type="number" id="concA" name="concA" placeholder="Enter value" step="0.01" required>
+                <span class="helper-text">mol/dm³</span>
+            </div>
+            <div class="form-group">
+                <label for="concB" class="required">Concentration of B</label>
+                <input type="number" id="concB" name="concB" placeholder="Enter value" step="0.01" required>
+                <span class="helper-text">mol/dm³</span>
+            </div>
+            <div class="form-group">
+                <label for="concC" class="required">Concentration of C</label>
+                <input type="number" id="concC" name="concC" placeholder="Enter value" step="0.01" required>
+                <span class="helper-text">mol/dm³</span>
+            </div>
+            <div class="form-group">
+                <label for="concD" class="required">Concentration of D</label>
+                <input type="number" id="concD" name="concD" placeholder="Enter value" step="0.01" required>
+                <span class="helper-text">mol/dm³</span>
+            </div>
+        </div>
+
+        <div class="input-grid" style="margin-top: var(--spacing-lg);">
+            <div class="form-group">
+                <label for="kconst" class="required">Kinetic Constant</label>
+                <input type="number" id="kconst" name="kconst" placeholder="Enter value" step="0.01" required>
+                <span class="helper-text">Enter value in units compatible with mol, dm³, g, min</span>
+            </div>
+            <div class="form-group">
+                <label for="keq" class="required">Equilibrium Constant</label>
+                <input type="number" id="keq" name="keq" placeholder="Enter value" step="0.01" required>
+                <span class="helper-text">Ratio of product to reactant concentrations at equilibrium</span>
+            </div>
+            <div class="form-group">
+                <label for="concAeq" class="required">Equilibrium Concentration</label>
+                <input type="number" id="concAeq" name="concAeq" placeholder="Enter value" step="0.01" required>
+                <span class="helper-text">of your limiting reactant (A), mol/dm³</span>
+            </div>
+            <div class="form-group">
+                <label for="temperature" class="required">System Temperature</label>
+                <input type="number" id="temperature" name="temperature" placeholder="Enter value" step="0.01" required>
+                <span class="helper-text">K</span>
+            </div>
+        </div>
+
+    </div>
+</div>

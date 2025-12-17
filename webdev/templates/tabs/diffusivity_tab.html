@@ -1,0 +1,105 @@
+<div id="diffusivity" class="tab-content">
+    <div class="form-section">
+        <h2>Effective Diffusivity Calculation Mode</h2>
+        <p>Choose the desired approach for diffusivity calculation.</p>
+        <div class="radio-group">
+            <div class="radio-option">
+                <input type="radio" id="diff-precomputed" name="diffusivityType" value="precomputed" checked>
+                <div style="display: grid">
+                    <label for="diff-precomputed">Pre-computed</label>    
+                    <span class="helper-text">The simplest approach. Requires pre-computed diffusivity values for each component, which are assumed constant.</span>
+                </div>  
+            </div>
+            <div class="radio-option">
+                <input type="radio" id="diff-ideal" name="diffusivityType" value="ideal">
+                <div style="display: grid">
+                    <label for="diff-ideal">Ideal</label>
+                    <span class="helper-text">No correction is applied to account for solution non-idealities. Requires only basic component properties.</span>
+                </div>
+            </div>
+            <div class="radio-option">
+                <input type="radio" id="diff-nonideal" name="diffusivityType" value="nonideal">
+                <div style="display: grid">
+                    <label for="diff-nonideal">Non-ideal (advanced)</label>
+                    <span class="helper-text">Uses UNIFAC to correct diffusivity values with activity coefficients. Also requires the specification of UNIFAC parameters.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-section" id="precomputed-props">
+        <h2>Pre-computed diffusivities</h2>
+        <p>Enter the diffusivities for each component in your system.</p>
+        <div class="input-grid">
+            <div class="form-group">
+                <label for="diffusivityA" class="required">Component A</label>
+                <input type="number" id="diffusivityA" name="diffusivityA" placeholder="Enter value" step="0.0001" required>
+                <span class="helper-text">dm²/min</span>
+            </div>
+            <div class="form-group">
+                <label for="diffusivityB" class="required">Component B</label>
+                <input type="number" id="diffusivityB" name="diffusivityB" placeholder="Enter value" step="0.0001" required>
+                <span class="helper-text">dm²/min</span>
+            </div>
+            <div class="form-group">
+                <label for="diffusivityC" class="required">Component C</label>
+                <input type="number" id="diffusivityC" name="diffusivityC" placeholder="Enter value" step="0.0001" required>
+                <span class="helper-text">dm²/min</span>
+            </div>
+
+            <div class="form-group">
+                <label for="diffusivityD" class="required">Component D</label>
+                <input type="number" id="diffusivityD" name="diffusivityD" placeholder="Enter value" step="0.0001" required>
+                <span class="helper-text">dm²/min</span>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="form-section" id="wilke-chang-props" style="display: none;">
+        <h2>Wilke-Chang Parameters</h2>
+        <p>Enter pure component data for the Wilke-Chang equation.</p>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Component</th>
+                    <th>Viscosity (cP)</th>
+                    <th>Molecular weight</th>
+                    <th>Molar volume at the normal boiling point (cm³/mol)</th>
+                    <th>Association factor</th>
+                </tr>
+            </thead>
+            <tbody id="wilkeChangTable">
+                <tr>
+                    <td>A</td>
+                    <td><input type="number" placeholder="1.00" step="0.01" class="viscosity" id="viscosityA"></td>
+                    <td><input type="number" placeholder="100.00" step="0.01" class="mw" id="mwA"></td>
+                    <td><input type="number" placeholder="100.00" step="0.01" class="vbp" id="vbpA"></td>
+                    <td><input type="number" placeholder="1.00" step="0.01" class="phi" id="phiA"></td>
+                </tr>
+                <tr>
+                    <td>B</td>
+                    <td><input type="number" placeholder="1.00" step="0.01" class="viscosity" id="viscosityB"></td>
+                    <td><input type="number" placeholder="100.00" step="0.01" class="mw" id="mwB"></td>
+                    <td><input type="number" placeholder="100.00" step="0.01" class="vbp" id="vbpB"></td>
+                    <td><input type="number" placeholder="1.00" step="0.01" class="phi" id="phiB"></td>
+                </tr>
+                <tr>
+                    <td>C</td>
+                    <td><input type="number" placeholder="1.00" step="0.01" class="viscosity" id="viscosityC"></td>
+                    <td><input type="number" placeholder="100.00" step="0.01" class="mw" id="mwC"></td>
+                    <td><input type="number" placeholder="100.00" step="0.01" class="vbp" id="vbpC"></td>
+                    <td><input type="number" placeholder="1.00" step="0.01" class="phi" id="phiC"></td>
+                </tr>
+                <tr>
+                    <td>D</td>
+                    <td><input type="number" placeholder="1.00" step="0.01" class="viscosity" id="viscosityD"></td>
+                    <td><input type="number" placeholder="100.00" step="0.01" class="mw" id="mwD"></td>
+                    <td><input type="number" placeholder="100.00" step="0.01" class="vbp" id="vbpD"></td>
+                    <td><input type="number" placeholder="1.00" step="0.01" class="phi" id="phiD"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
