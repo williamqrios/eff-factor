@@ -30,12 +30,12 @@
                 </tr>
             </thead>
             <tbody id="groupMatrix">
-                <tr>
+                <tr data-group-id="0">
                     <td><input type="text" placeholder="Group 1" class="group-name"></td>
-                    <td><input type="number" placeholder="0" step="1" min="0" class="group1-A"></td>
-                    <td><input type="number" placeholder="0" step="1" min="0" class="group1-B"></td>
-                    <td><input type="number" placeholder="0" step="1" min="0" class="group1-C"></td>
-                    <td><input type="number" placeholder="0" step="1" min="0" class="group1-D"></td>
+                    <td><input type="number" placeholder="0" step="1" min="0" name="group1-A"></td>
+                    <td><input type="number" placeholder="0" step="1" min="0" name="group1-B"></td>
+                    <td><input type="number" placeholder="0" step="1" min="0" name="group1-C"></td>
+                    <td><input type="number" placeholder="0" step="1" min="0" name="group1-D"></td>
                     <td class="row-action"><button type="button" class="btn-danger btn-small delete-row" style="display: none;">✕</button></td>
                 </tr>
             </tbody>
@@ -43,7 +43,7 @@
 
         <div class="button-group">
             <button type="button" class="btn-secondary btn-small" id="addRowBtn">
-                + Add Component
+                + Add Group
             </button>
         </div>
 
@@ -73,10 +73,10 @@
                 </tr>
             </thead>
             <tbody id="groupParameters">
-                <tr>
+                <tr data-group-id="0">
                     <td><input type="text" placeholder="Group 1" class="group-name"></td>
-                    <td><input type="number" placeholder="0.0" step="0.1" class="group1-Rk"></td>
-                    <td><input type="number" placeholder="0.0" step="0.1" class="group1-Qk"></td>
+                    <td><input type="number" placeholder="0.0" step="0.1" name="group1-Rk"></td>
+                    <td><input type="number" placeholder="0.0" step="0.1" name="group1-Qk"></td>
                 </tr>
             </tbody>
         </table>
@@ -108,8 +108,8 @@
             </thead>
             <tbody id="energyMatrix">
                 <tr data-group-id="0">
-                    <td><input type="text" placeholder="Group 1" class="group-name"></td>
-                    <td data-group-id="0"><input type="number" placeholder="0.0" step="0.1" class="energy1-1"></td>
+                    <td data-group-id="0"><input type="text" placeholder="Group 1" class="group-name"></td>
+                    <td data-group-id="0"><input type="number" placeholder="0.0" step="0.1" name="energy1-1"></td>
                 </tr>
             </tbody>
         </table>

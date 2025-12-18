@@ -6,7 +6,6 @@ const formState = {
 };
 
 var advancedEnabled = true;
-
 // !SECTION
 
 
@@ -21,11 +20,10 @@ function switchTab(tabIndex) {
     if (tabIndex < 0 || tabIndex >= formState.tabs.length) return;
 
     // Validate current tab before switching
-    //TODO remove this comment (commented now to speed up testing)
-    // if (tabIndex > formState.currentTab && !validateTab(formState.currentTab)) {
-    //     showValidationMessage('Please fill in all required fields in this tab', 'error');
-    //     return;
-    // }
+    if (tabIndex > formState.currentTab && !validateTab(formState.currentTab)) {
+        showValidationMessage('Please fill in all required fields in this tab', 'error');
+        return;
+    }
 
     // Remove active class from all buttons and contents
     tabButtons.forEach(btn => btn.classList.remove('active'));
@@ -111,22 +109,24 @@ function updateConcentrationRequirements() {
     const selectedRxType = document.querySelector('input[name="rxType"]:checked').value;
 
     if (['type2', 'type4', 'type6'].includes(selectedRxType)) {
-        concBInput.required = false;
-        concBInput.disabled = true;
+        concBInput.removeAttribute('required');
+        concBInput.setAttribute('disabled', true);
         concBInput.value = '';
+        constBLabel.classList.remove('required');
     } else {
-        concBInput.required = true;
-        concBInput.disabled = false;
+        concBInput.setAttribute('required', true);
+        concBInput.removeAttribute('disabled');
         constBLabel.classList.add('required');
     }
 
     if (['type3', 'type5', 'type6'].includes(selectedRxType)) {
-        concDInput.required = false;
-        concDInput.disabled = true;
+        concDInput.removeAttribute('required');
+        concDInput.setAttribute('disabled', true);
         concDInput.value = '';
+        constDLabel.classList.remove('required');
     } else {
-        concDInput.required = true;
-        concDInput.disabled = false;
+        concDInput.setAttribute('required', true);
+        concDInput.removeAttribute('disabled');
         constDLabel.classList.add('required');
     }
 }
@@ -139,8 +139,8 @@ rxTypesRadioButtons.forEach(radio => {
 
 // SECTION: Dynamic form requirement update for diffusivity type
 // Depends on:
-// * Selected diffusivity computation mode (pre-computed)
-// * Previously selected reaction type
+// - Selected diffusivity computation mode (pre-computed)
+// - Previously selected reaction type
 const diffusivityTypeRadioButtons = document.querySelectorAll('input[name="diffusivityType"]');
 const diffusivityInputs = document.querySelectorAll('#diffusivityA, #diffusivityB, #diffusivityC, #diffusivityD');
 const diffusivityLabels = document.querySelectorAll('label[for="diffusivityA"], label[for="diffusivityB"], label[for="diffusivityC"], label[for="diffusivityD"]');
@@ -150,7 +150,9 @@ const wilkeChangForm = document.getElementById('wilke-chang-props');
 // Remove "required" for fields in precomputed-props inputs
 function removePrecomputedRequirements() {
     diffusivityInputs.forEach(input => {
-        input.required = false;
+        input.removeAttribute('required');
+        input.setAttribute('disabled', true);
+        input.value = '';
     });
     diffusivityLabels.forEach(label => {
         label.classList.remove('required');
@@ -160,8 +162,8 @@ function removePrecomputedRequirements() {
 function addPrecomputedRequirements() {
     // Add everything back 
     diffusivityInputs.forEach(input => {
-        input.required = true;
-        input.disabled = false;
+        input.setAttribute('required', true);
+        input.removeAttribute('disabled');
     });
     diffusivityLabels.forEach(label => {
         label.classList.add('required');
@@ -173,16 +175,16 @@ function addPrecomputedRequirements() {
     if (['type2', 'type4', 'type6'].includes(selectedRxType)) {
         const inputB = document.getElementById('diffusivityB');
         const labelB = document.querySelector('label[for="diffusivityB"]');
-        inputB.required = false;
-        inputB.disabled = true;
+        inputB.removeAttribute('required');
+        inputB.setAttribute('disabled', true);
         labelB.classList.remove('required');
     }
 
     if (['type3', 'type5', 'type6'].includes(selectedRxType)) {
         const inputD = document.getElementById('diffusivityD');
         const labelD = document.querySelector('label[for="diffusivityD"]');
-        inputD.required = false;
-        inputD.disabled = true;
+        inputD.removeAttribute('required');
+        inputD.setAttribute('disabled', true);
         labelD.classList.remove('required');
     }
 }
@@ -297,7 +299,7 @@ const groupParametersBody = document.getElementById('groupParameters');
 const energyMatrixHead = document.getElementById('energyMatrixHead');
 const energyMatrixBody = document.getElementById('energyMatrix');
 const addRowBtn = document.getElementById('addRowBtn');
-let groupIdCounter = 0; // Unique ID generator for groups
+let groupIdCounter = 1; // Unique ID generator for groups
 
 function addParameterRow() {
     const groupId = groupIdCounter++;
@@ -307,10 +309,10 @@ function addParameterRow() {
     newMatrixRow.dataset.groupId = groupId;
     newMatrixRow.innerHTML = `
         <td><input type="text" placeholder="Group ${rowIndex + 1}" class="group-name"></td>
-        <td><input type="number" placeholder="0" step="1" min="0" class="group${rowIndex + 1}-A"></td>
-        <td><input type="number" placeholder="0" step="1" min="0" class="group${rowIndex + 1}-B"></td>
-        <td><input type="number" placeholder="0" step="1" min="0" class="group${rowIndex + 1}-C"></td>
-        <td><input type="number" placeholder="0" step="1" min="0" class="group${rowIndex + 1}-D"></td>
+        <td><input type="number" placeholder="0" step="1" min="0" name="group${rowIndex + 1}-A"></td>
+        <td><input type="number" placeholder="0" step="1" min="0" name="group${rowIndex + 1}-B"></td>
+        <td><input type="number" placeholder="0" step="1" min="0" name="group${rowIndex + 1}-C"></td>
+        <td><input type="number" placeholder="0" step="1" min="0" name="group${rowIndex + 1}-D"></td>
         <td class="row-action"><button type="button" class="btn-danger btn-small delete-row">✕</button></td>
     `;
 
@@ -319,8 +321,8 @@ function addParameterRow() {
     newParameterRow.dataset.groupId = groupId;
     newParameterRow.innerHTML = `
         <td><input type="text" placeholder="Group ${rowIndex + 1}" class="group-name"></td>
-        <td><input type="number" placeholder="0.0" step="0.1" class="group${rowIndex + 1}-Rk"></td>
-        <td><input type="number" placeholder="0.0" step="0.1" class="group${rowIndex + 1}-Qk"></td>
+        <td><input type="number" placeholder="0.0" step="0.1" name="group${rowIndex + 1}-Rk"></td>
+        <td><input type="number" placeholder="0.0" step="0.1" name="group${rowIndex + 1}-Qk"></td>
         `;
     
 
@@ -332,7 +334,7 @@ function addParameterRow() {
     // New basic row  
     const newEnergyRow = document.createElement('tr');
     newEnergyRow.dataset.groupId = groupId;
-    let rowCells = `<td><input type="text" placeholder="Group ${rowIndex + 1}" class="group-name"></td>` + generateEnergyMatrixCells(0, rowIndex + 1, groupId);
+    let rowCells = `<td><input type="text" placeholder="Group ${rowIndex + 1}" class="group-name"></td>` + generateEnergyMatrixCells(0, rowIndex + 1);
     newEnergyRow.innerHTML = rowCells;
 
     const deleteBtn = newMatrixRow.querySelector('.delete-row');
@@ -355,19 +357,17 @@ function updateEnergyMatrixRows(numGroups, newGroupId) {
         // Do not clear the contents of any pre-existing cells
         const rowGroupId = row.dataset.groupId; 
         if (rowGroupId !== newGroupId && rowIndex !== numGroups - 1) {
-            let newCells = `<td data-group-id="${newGroupId}"><input type="number" placeholder="0.0" step="0.1" class="energy-${numGroups}-${numGroups}"></td>`;
-            // console.log(newCells);
+            let newCells = `<td><input type="number" placeholder="0.0" step="0.1" name="energy-${numGroups}-${numGroups}"></td>`;
             row.insertAdjacentHTML('beforeend', newCells);
         }
     });
 }
 
-function generateEnergyMatrixCells(start, numGroups, groupId) {
+function generateEnergyMatrixCells(start, numGroups) {
     let newCells = ``;
     for (let j = start; j < numGroups; j++) {
-        newCells += `<td data-group-id="${groupId}"><input type="number" placeholder="0.0" step="0.1" class="energy-${numGroups}-${j + 1}"></td>`;
+        newCells += `<td><input type="number" placeholder="0.0" step="0.1" name="energy-${numGroups}-${j + 1}"></td>`;
     }
-    console.log(newCells);
     return newCells;
 }
 
@@ -376,15 +376,21 @@ function deletePairedRows(groupId) {
     const parameterRows = groupParametersBody.querySelector(`tr[data-group-id="${groupId}"]`);
     const energyRow = energyMatrixBody.querySelector(`tr[data-group-id="${groupId}"]`);
     const energyColumn = energyMatrixHead.querySelector(`th[data-group-id="${groupId}"]`);
-    const energyCells = energyMatrixBody.querySelectorAll(`td[data-group-id="${groupId}"]`);
-    console.log(groupId);
-    console.log(matrixRows);
+    const allEnergyColumns = Array.from(energyMatrixHead.querySelectorAll('th'));
+    const deletedColumnIndex = allEnergyColumns.findIndex(th => th.dataset.groupId === String(groupId));
 
     // Remove last added energy column and row
     if (energyColumn) energyColumn.remove();
     if (energyRow) energyRow.remove();
-    // Remove all cells in other rows that correspond to the deleted column
-    energyCells.forEach(cell => cell.remove());
+    // Remove cell at the column index from all remaining rows
+    if (deletedColumnIndex !== -1) {
+        energyMatrixBody.querySelectorAll('tr').forEach(row => {
+            const cells = Array.from(row.querySelectorAll('td'));
+            if (cells[deletedColumnIndex]) {
+                cells[deletedColumnIndex].remove();
+            }
+        });
+    }
 
     // Finally remove the other simpler paired rows
     if (matrixRows) matrixRows.remove();
@@ -406,19 +412,19 @@ addRowBtn.addEventListener('click', (e) => {
     addParameterRow();
 });
 
-// Delete row buttons for initial rows (only one row is created on load - we don't want to delete it)
-document.querySelectorAll('.delete-row').forEach(btn => {
-    btn.addEventListener('click', (e) => {
+// Delete row buttons for initial rows
+groupMatrixBody.querySelectorAll('tr').forEach(row => {
+    const deleteBtn = row.querySelector('.delete-row');
+    deleteBtn.addEventListener('click', (e) => {
         e.preventDefault();
-        const groupId = btn.closest('tr').dataset.groupId;
+        const groupId = row.dataset.groupId;
         deletePairedRows(groupId);
     });
 });
 
 updateDeleteButtons();
-// !SECTION
 
-//SECTION: Advanced tab rendering tables
+
 const groupMatrixHead = document.querySelector('#groupMatrixHead');
 
 function updateGroupMatrixColumnVisibility() {
@@ -471,9 +477,7 @@ function validateTab(tabIndex) {
         }
     });
 
-    //TODO fix
-    // return isValid;
-    return true; // Temporarily disable validation for testing
+    return isValid;
 }
 
 // Validation Messages
@@ -545,15 +549,14 @@ calculatorForm.addEventListener('submit', (e) => {
     console.log('Form submitted with data:', data);
     showValidationMessage('Form submitted successfully! Check console for data.', 'success');
     
-    // Here you would typically send the data to your Django backend
-    // Example:
-    // fetch('/api/calculate/', {
-    //     method: 'POST',
-    //     headers: {
-    //         'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify(data)
-    // })
+    // Send the data to backend
+    fetch('/calculate', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+    });
 });
 
 //!SECTION

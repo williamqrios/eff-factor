@@ -27,19 +27,23 @@ class CatalystGeometry(Enum):
     Other = "Other"
 
 
-def effectiveness_factor_wrapper(reaction_type: ReactionType, catalyst_geometry: CatalystGeometry, catalyst_characteristic_length: float, catalyst_porosity: float, catalyst_density: float, kinetic_constant: float, equilibrium_constant: float, equilibrium_Ca: float, concentrations: Vector, diffusivity_computation: DiffusivityComputation, catalyst_tortuosity: Optional[float] = None, diffusivities: Optional[Vector] = None, molecular_weights: Optional[Vector] = None, association_factors: Optional[Vector] = None, molar_volumes_bp: Optional[Vector] = None, viscosities: Optional[Vector] = None, temperature: Optional[float] = None, unifac_R: Optional[Vector] = None, unifac_Q: Optional[Vector] = None, unifac_a: Optional[Matrix] = None, unifac_nu: Optional[Matrix] = None) -> float:
+def effectiveness_factor_wrapper(reaction_type: ReactionType,
+                                catalyst_geometry: CatalystGeometry, catalyst_characteristic_length: float, catalyst_porosity: float, catalyst_density: float, kinetic_constant: float, equilibrium_constant: float, equilibrium_Ca: float, concentrations: Vector, diffusivity_computation: DiffusivityComputation, catalyst_tortuosity: Optional[float] = None, diffusivities: Optional[Vector] = None, molecular_weights: Optional[Vector] = None, association_factors: Optional[Vector] = None, molar_volumes_bp: Optional[Vector] = None, viscosities: Optional[Vector] = None, temperature: Optional[float] = None, unifac_R: Optional[Vector] = None, unifac_Q: Optional[Vector] = None, unifac_a: Optional[Matrix] = None, unifac_nu: Optional[Matrix] = None) -> float:
     if diffusivity_computation == DiffusivityComputation.Precomputed: 
         if diffusivities is None:
             raise ValueError("Diffusivities must be provided for precomputed diffusivity calculation.")
-        return ef.ef_precomputed_diffusivities(reaction_type.value[0], catalyst_geometry.value[0], catalyst_characteristic_length, catalyst_porosity, catalyst_density, catalyst_tortuosity, kinetic_constant, equilibrium_constant, equilibrium_Ca, concentrations, diffusivities)
+        return ef.ef_precomputed_diffusivities(reaction_type.value[0],
+                                                catalyst_geometry.value[0], catalyst_characteristic_length, catalyst_porosity, catalyst_density, catalyst_tortuosity, kinetic_constant, equilibrium_constant, equilibrium_Ca, concentrations, diffusivities)
     if diffusivity_computation == DiffusivityComputation.Ideal:
         if any(map(lambda x: x is None, [molecular_weights, association_factors, molar_volumes_bp, viscosities, temperature])):
             raise ValueError("All parameters must be provided for ideal diffusivity calculation.")
-        return ef.ef_diffusivities_ideal(reaction_type.value[0], catalyst_geometry.value[0], catalyst_characteristic_length, catalyst_porosity, catalyst_density, catalyst_tortuosity, kinetic_constant, equilibrium_constant, equilibrium_Ca, concentrations, molecular_weights, association_factors, molar_volumes_bp, viscosities, temperature)
+        return ef.ef_diffusivities_ideal(reaction_type.value[0],
+                                        catalyst_geometry.value[0], catalyst_characteristic_length, catalyst_porosity, catalyst_density, catalyst_tortuosity, kinetic_constant, equilibrium_constant, equilibrium_Ca, concentrations, molecular_weights, association_factors, molar_volumes_bp, viscosities, temperature)
     if diffusivity_computation == DiffusivityComputation.NonIdeal:
         if any(map(lambda x: x is None, [molecular_weights, association_factors, molar_volumes_bp, viscosities, temperature, unifac_Q, unifac_a, unifac_nu])):
             raise ValueError("All parameters must be provided for non-ideal diffusivity calculation.")
-        return ef.ef_diffusivities_new(reaction_type.value[0], catalyst_geometry.value[0], catalyst_characteristic_length, catalyst_porosity, catalyst_density, catalyst_tortuosity, kinetic_constant, equilibrium_constant, equilibrium_Ca, concentrations, molecular_weights, association_factors, molar_volumes_bp, viscosities, temperature, unifac_R, unifac_Q, unifac_a, unifac_nu)
+        return ef.ef_diffusivities_new(reaction_type.value[0],
+                                       catalyst_geometry.value[0], catalyst_characteristic_length, catalyst_porosity, catalyst_density, catalyst_tortuosity, kinetic_constant, equilibrium_constant, equilibrium_Ca, concentrations, molecular_weights, association_factors, molar_volumes_bp, viscosities, temperature, unifac_R, unifac_Q, unifac_a, unifac_nu)
 
 
 
