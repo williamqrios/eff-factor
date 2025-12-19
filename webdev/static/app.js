@@ -309,10 +309,10 @@ function addParameterRow() {
     newMatrixRow.dataset.groupId = groupId;
     newMatrixRow.innerHTML = `
         <td><input type="text" placeholder="Group ${rowIndex + 1}" class="group-name"></td>
-        <td><input type="number" placeholder="0" step="1" min="0" name="group${rowIndex + 1}-A"></td>
-        <td><input type="number" placeholder="0" step="1" min="0" name="group${rowIndex + 1}-B"></td>
-        <td><input type="number" placeholder="0" step="1" min="0" name="group${rowIndex + 1}-C"></td>
-        <td><input type="number" placeholder="0" step="1" min="0" name="group${rowIndex + 1}-D"></td>
+        <td><input type="number" placeholder="0" step="any" min="0" name="group${rowIndex + 1}-A"></td>
+        <td><input type="number" placeholder="0" step="any" min="0" name="group${rowIndex + 1}-B"></td>
+        <td><input type="number" placeholder="0" step="any" min="0" name="group${rowIndex + 1}-C"></td>
+        <td><input type="number" placeholder="0" step="any" min="0" name="group${rowIndex + 1}-D"></td>
         <td class="row-action"><button type="button" class="btn-danger btn-small delete-row">✕</button></td>
     `;
 
@@ -321,8 +321,8 @@ function addParameterRow() {
     newParameterRow.dataset.groupId = groupId;
     newParameterRow.innerHTML = `
         <td><input type="text" placeholder="Group ${rowIndex + 1}" class="group-name"></td>
-        <td><input type="number" placeholder="0.0" step="0.1" name="group${rowIndex + 1}-Rk"></td>
-        <td><input type="number" placeholder="0.0" step="0.1" name="group${rowIndex + 1}-Qk"></td>
+        <td><input type="number" placeholder="0.0" step="any" name="group${rowIndex + 1}-Rk"></td>
+        <td><input type="number" placeholder="0.0" step="any" name="group${rowIndex + 1}-Qk"></td>
         `;
     
 
@@ -349,6 +349,7 @@ function addParameterRow() {
     energyMatrixBody.appendChild(newEnergyRow);
     updateEnergyMatrixRows(rowIndex + 1, groupId);
     updateDeleteButtons();
+    updateGroupMatrixColumnVisibility();
 }
 
 function updateEnergyMatrixRows(numGroups, newGroupId) {
@@ -357,7 +358,7 @@ function updateEnergyMatrixRows(numGroups, newGroupId) {
         // Do not clear the contents of any pre-existing cells
         const rowGroupId = row.dataset.groupId; 
         if (rowGroupId !== newGroupId && rowIndex !== numGroups - 1) {
-            let newCells = `<td><input type="number" placeholder="0.0" step="0.1" name="energy-${numGroups}-${numGroups}"></td>`;
+            let newCells = `<td><input type="number" placeholder="0.0" step="any" name="energy-${numGroups}-${numGroups}"></td>`;
             row.insertAdjacentHTML('beforeend', newCells);
         }
     });
@@ -366,7 +367,7 @@ function updateEnergyMatrixRows(numGroups, newGroupId) {
 function generateEnergyMatrixCells(start, numGroups) {
     let newCells = ``;
     for (let j = start; j < numGroups; j++) {
-        newCells += `<td><input type="number" placeholder="0.0" step="0.1" name="energy-${numGroups}-${j + 1}"></td>`;
+        newCells += `<td><input type="number" placeholder="0.0" step="any" name="energy-${numGroups}-${j + 1}"></td>`;
     }
     return newCells;
 }
@@ -495,6 +496,27 @@ function showValidationMessage(message, type = 'info') {
         messageEl.remove();
     }, 5000);
 }
+
+// Show calculation Result
+function showCalculationResult(result, type = 'success') {
+    const container = document.getElementById('calculationResultContainer');
+    const resultEl = document.createElement('div');
+    const title = type === 'success' ? 'Result' : 'Error';
+    const resultFormatted = type === 'success' ? result.toFixed(6) : result;
+    
+    resultEl.className = `validation-message ${type} fade-in`;
+    resultEl.innerHTML = `<h2>${title}:</h2>
+    <h3>${resultFormatted}</h3>`;
+
+    container.innerHTML = '';
+    container.appendChild(resultEl);
+}
+function clearCalculationResult() {
+    const container = document.getElementById('calculationResultContainer');
+    container.textContext = '';
+}
+
+
 // !SECTION
 
 // SECTION: Update Review Tab
@@ -547,8 +569,7 @@ calculatorForm.addEventListener('submit', (e) => {
     const data = Object.fromEntries(formData);
     
     console.log('Form submitted with data:', data);
-    showValidationMessage('Form submitted successfully! Check console for data.', 'success');
-    
+    clearCalculationResult();
     // Send the data to backend
     fetch('/calculate', {
         method: 'POST',
@@ -556,6 +577,21 @@ calculatorForm.addEventListener('submit', (e) => {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(data)
+    })
+    .then(response => {
+        if (!response.ok) {
+            return response.json().then(data => {
+                throw new Error(data.error || 'An error occurred');
+            });
+        }   
+        return response.json();
+    })
+    .then(result => {
+        console.log(result);
+        showCalculationResult(result.result, 'success');
+    }).catch(error => {
+        console.log(error);
+        showCalculationResult(error.message, 'error');
     });
 });
 

@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <title>Effectiveness Factor Calculator</title>
+    <title>Effectiveness Factor Calculator for Isothermal Reversible Reactions</title>
 </head>
 
 <body>
     <div class="container">
         <div class="header">
-            <h1>Effectiveness Factor Calculator</h1>
+            <h1>Effectiveness Factor Calculator for Isothermal Reversible Reactions</h1>
         </div>
 
         <div class="form-wrapper">
@@ -45,17 +45,7 @@
                 {% include 'tabs/advanced_tab.html' %}
 
                 <!-- Tab 4: Review -->
-                <div id="review" class="tab-content">
-                    <div class="form-section">
-                        <h2>Review Your Input</h2>
-                        <p>Verify all your inputs before submitting the calculation</p>
-                        <div id="reviewContent" style="margin-top: var(--spacing-lg);">
-                            <p style="color: var(--text-secondary); text-align: center; padding: var(--spacing-lg);">
-                                Fill out all tabs to see a summary of your inputs here.
-                            </p>
-                        </div>
-                    </div>
-                </div>
+                {% include 'tabs/review_tab.html' %}
 
                 <!-- Form Actions -->
                 <div class="button-group" style="justify-content: space-between; margin-top: var(--spacing-xl); padding-top: var(--spacing-lg); border-top: 1px solid var(--border-color);">
